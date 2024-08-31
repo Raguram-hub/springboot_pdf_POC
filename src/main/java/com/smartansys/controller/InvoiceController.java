@@ -13,13 +13,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.smartansys.model.Invoice;
 import com.smartansys.model.InvoiceItem;
+import com.smartansys.service.MatPdfService;
 import com.smartansys.service.PdfService;
 
 @RestController
 public class InvoiceController {
 	//4th set of code
-	 @Autowired
+	 	@Autowired
 	    private PdfService pdfService;
+	 	
+	 	@Autowired
+	    private MatPdfService matPdfService;
 
 	    @GetMapping("/invoice/pdf")
 	    public ResponseEntity<InputStreamResource> generateInvoice() {
@@ -39,6 +43,35 @@ public class InvoiceController {
 	        );
 
 	        ByteArrayInputStream bis = pdfService.generateInvoicePdf(invoice);
+
+	        HttpHeaders headers = new HttpHeaders();
+	        headers.add("Content-Disposition", "inline; filename=invoice.pdf");
+
+	        return ResponseEntity
+	                .ok()
+	                .headers(headers)
+	                .contentType(MediaType.APPLICATION_PDF)
+	                .body(new InputStreamResource(bis));
+	    }
+	    
+	    @GetMapping("/matInvoice/pdf")
+	    public ResponseEntity<InputStreamResource> generateMatInvoice() {
+//	        Invoice invoice = new Invoice(
+//	                "INV-12345",
+//	                "MS Info tech LLC",
+//	                "723 south interstate I-35 East, Ste#215, Denton-76205.",
+//	                "515-758-0450",
+//	                "87-2646898",
+//	                "accounts@msitus.com",
+//	                "02.07.2024",
+//	                "Month of April 2024",
+//	                Arrays.asList(
+//	                        new InvoiceItem(1, "Full Stack Developer", 5, 100, 500.0)
+//	                ),
+//	                500.0
+//	        );
+
+	        ByteArrayInputStream bis = matPdfService.generateInvoicePdf();
 
 	        HttpHeaders headers = new HttpHeaders();
 	        headers.add("Content-Disposition", "inline; filename=invoice.pdf");
