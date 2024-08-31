@@ -87,9 +87,30 @@ public class MatPdfService {
 	        leftCell.addElement(new Paragraph("District Preference: Chennai"));
 	        mainTable.addCell(leftCell);
 	        
+//	        PdfPCell rightCell = new PdfPCell();
+//	        rightCell.setBorder(Rectangle.NO_BORDER);
+//	        rightCell.addElement(new Paragraph("Photo"));
+//	        mainTable.addCell(rightCell);
+	        
+	     // Add Image to the right column
 	        PdfPCell rightCell = new PdfPCell();
 	        rightCell.setBorder(Rectangle.NO_BORDER);
-	        rightCell.addElement(new Paragraph("Photo"));
+	        
+	        try {
+	            // Load the image from URL
+	            String imageUrlStr = "https://i1.sndcdn.com/artworks-ld1LXaL9zbu4sgPz-5Qp0Lg-t500x500.jpg"; // Replace with your image URL
+	            URL imageUrl = new URL(imageUrlStr);
+	            Image img = Image.getInstance(imageUrl);
+	            img.scaleToFit(120, 150); // Resize image to fit the cell
+	            img.setAlignment(Element.ALIGN_CENTER);
+
+	            // Add the image to the cell
+	            rightCell.addElement(img);
+	        } catch (Exception e) {
+	            System.err.println("Failed to load image from URL: " + e.getMessage());
+	            rightCell.addElement(new Paragraph("Image not available"));
+	        }
+	        
 	        mainTable.addCell(rightCell);
 
 	        // Add Basic Details to the right column
@@ -189,118 +210,30 @@ public class MatPdfService {
 	        document.add(mainTable);
 	    }
 
-	    private void addInvoiceInfo(Document document) throws DocumentException {
-	    	
-	    	document.add(Chunk.NEWLINE);
-	    	document.add(new Paragraph("Personal Details:", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
-	    	document.add(new Paragraph("ID: MATR123456"));
-	    	document.add(new Paragraph("Name: Arun Kumar"));
-	    	document.add(new Paragraph("Mobile Number: 9876543210"));
-	    	document.add(new Paragraph("Email Address: arun.kumar@example.com"));
-	    	document.add(new Paragraph("Partner Preference: Looking for a well-educated partner with similar values."));
-	    	document.add(new Paragraph("About This Profile: This profile is created by the user's parents."));
-	    	document.add(new Paragraph("Profile Created For: Son"));
-	    	document.add(new Paragraph("Expectation Details: Looking for a well-educated partner."));
-	    	document.add(new Paragraph("District Preference: Chennai"));
-
-	    	document.add(Chunk.NEWLINE);
-	    	document.add(new Paragraph("Basic Details:", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
-	    	document.add(new Paragraph("Date of birth: 1990-01-01"));
-	    	document.add(new Paragraph("Age: 34"));
-	    	document.add(new Paragraph("Gender: Male"));
-	    	document.add(new Paragraph("Height: 6 ft"));
-	    	document.add(new Paragraph("Weight: 75 kg"));
-	    	document.add(new Paragraph("Mother Tongue: Tamil"));
-	    	document.add(new Paragraph("Marital Status: Single"));
-	    	document.add(new Paragraph("Body Type: Athletic"));
-	    	document.add(new Paragraph("Complexion: Fair"));
-	    	document.add(new Paragraph("Languages Known: English, Tamil"));
-	    	document.add(new Paragraph("Blood Group: O+"));
-	    	document.add(new Paragraph("Birth Time: 10:00 AM"));
-	    	document.add(new Paragraph("BirthPlace: Chennai"));
-
-	    	document.add(Chunk.NEWLINE);
-	    	document.add(new Paragraph("Religion Information:", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
-	    	document.add(new Paragraph("Religion: Hindu"));
-	    	document.add(new Paragraph("Caste: Brahmin"));
-	    	document.add(new Paragraph("Sub Caste: Iyer"));
-	    	document.add(new Paragraph("Rasi: Mesha"));
-	    	document.add(new Paragraph("Star: Ashwini"));
-	    	document.add(new Paragraph("Dosham: No"));
-	    	document.add(new Paragraph("Dosham Details: N/A"));
-	    	document.add(new Paragraph("Kuladeivam: Perumal"));
-
-	    	document.add(Chunk.NEWLINE);
-	    	document.add(new Paragraph("Family Details Information:", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
-	    	document.add(new Paragraph("Father's Name: Raman Iyer"));
-	    	document.add(new Paragraph("Mother's Name: Lakshmi Iyer"));
-	    	document.add(new Paragraph("Family Value: Traditional"));
-	    	document.add(new Paragraph("Family Status: Middle Class"));
-	    	document.add(new Paragraph("Family Type: Nuclear"));
-	    	document.add(new Paragraph("Father's Occupation: Retired"));
-	    	document.add(new Paragraph("Mother's Occupation: Homemaker"));
-	    	document.add(new Paragraph("Parent's Contact Number: 9876543210"));
-	    	document.add(new Paragraph("Number of Brothers: 1"));
-	    	document.add(new Paragraph("Number of Sisters: 2"));
-	    	document.add(new Paragraph("Married Sisters: 1"));
-	    	document.add(new Paragraph("Married Brothers: 0"));
-	    	document.add(new Paragraph("Asset Details: House in Chennai"));
-	    	document.add(new Paragraph("Asset Worth: 50 Lakhs"));
-	    	document.add(new Paragraph("About My Family: We are a close-knit family with traditional values."));
-
-	    	document.add(Chunk.NEWLINE);
-	    	document.add(new Paragraph("Contact Information:", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
-	    	document.add(new Paragraph("State: Tamil Nadu"));
-	    	document.add(new Paragraph("District: Chennai"));
-	    	document.add(new Paragraph("City: Chennai"));
-	    	document.add(new Paragraph("Taluk: Mylapore"));
-	    	document.add(new Paragraph("Pin Code: 600004"));
-
-	    	document.add(Chunk.NEWLINE);
-	    	document.add(new Paragraph("Professional Information:", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
-	    	document.add(new Paragraph("Education: B.Tech in Computer Science"));
-	    	document.add(new Paragraph("College Details: Anna University"));
-	    	document.add(new Paragraph("Occupation Details: Software Engineer at ABC Corp"));
-	    	document.add(new Paragraph("Job Type: Full-time"));
-	    	document.add(new Paragraph("Yearly Income: 10 Lakhs"));
-
-	    	document.add(Chunk.NEWLINE);
-	    	document.add(new Paragraph("LifeStyle Information:", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
-	    	document.add(new Paragraph("Hobbies and Interests: Reading, Traveling"));
-	    	document.add(new Paragraph("Sports: Cricket"));
-	    	document.add(new Paragraph("Music: Classical"));
-	    	document.add(new Paragraph("Food: Vegetarian"));
-
-       
-//	        document.add(Chunk.NEWLINE);
-//	        document.add(new Paragraph("BILL TO:", FontFactory.getFont(FontFactory.HELVETICA_BOLD, 12)));
-//	        document.add(new Paragraph("Company Name: " + invoice.getCustomerName()));
-//	        document.add(new Paragraph("Address: " + invoice.getCustomerAddress()));
-//	        document.add(new Paragraph("Phone Number: " + invoice.getCustomerPhone()));
-//	        document.add(new Paragraph("Fed ID: " + invoice.getCustomerFedId()));
-//	        document.add(new Paragraph("Email ID: " + invoice.getCustomerEmail()));
-//	        document.add(new Paragraph("DATE: " + invoice.getDate()));
-//	        document.add(new Paragraph("Invoice Date: " + invoice.getInvoiceDate()));
-	    }
-	    
-	    
-	    
-	    
-
 
 	    class HeaderFooterPageEvent extends PdfPageEventHelper {
 	        Font footerFont = FontFactory.getFont(FontFactory.HELVETICA, 10, Font.ITALIC);
 
 	        @Override
 	        public void onEndPage(PdfWriter writer, Document document) {
+	        	PdfContentByte canvas = writer.getDirectContent();
+	            Rectangle pageSize = document.getPageSize();
+
+	            // Draw the border
+	            //canvas.setColorStroke(BaseColor.BLACK);
+	            canvas.setLineWidth(1f); // Border thickness
+	            canvas.rectangle(pageSize.getLeft(20), pageSize.getBottom(20), pageSize.getWidth() - 40, pageSize.getHeight() - 40);
+	            canvas.stroke();
+	            
+	            // Draw footer text
 	            PdfPTable footer = new PdfPTable(1);
 	            footer.setTotalWidth(523);
 	            footer.setWidthPercentage(100);
 
-	            PdfPCell cell = new PdfPCell(new Phrase("Generated by My Company", footerFont));
-	            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
-	            cell.setBorder(Rectangle.NO_BORDER);
-	            footer.addCell(cell);
+//	            PdfPCell cell = new PdfPCell(new Phrase("Generated by My Company", footerFont));
+//	            cell.setHorizontalAlignment(Element.ALIGN_CENTER);
+//	            cell.setBorder(Rectangle.NO_BORDER);
+//	            footer.addCell(cell);
 
 	            footer.writeSelectedRows(0, -1, 36, 30, writer.getDirectContent());
 	        }
